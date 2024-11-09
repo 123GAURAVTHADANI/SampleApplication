@@ -1,16 +1,23 @@
+import Login from "../LoginComponent/Login";
 import Main from "../Main/Main";
 import Product from "../Product/Product";
 import "./Styles/App.css";
-import React from "react";
+import React, { createContext } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import AuthProvider from "../AuthProvider/AuthProvider";
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/product/:id" element={<Product />} />
-      </Routes>
+      <AuthProvider>
+        <Routes>
+        <Route path="/login" element={<Login />} />
+          <Route element={<PrivateRoute />}>
+          <Route path="/" element={<Main />} /> 
+          </Route>
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   );
 }
